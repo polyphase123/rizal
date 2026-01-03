@@ -35,46 +35,49 @@
         .btn-vintage {
             background: var(--accent-gold);
             color: #1a0f0a;
-            padding: 0.6rem 1.5rem;
+            padding: 0.8rem 2rem;
             font-weight: bold;
             transition: all 0.3s;
             border: 2px solid var(--accent-gold);
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 0.8rem;
+            font-size: 1rem;
         }
         .btn-vintage:hover { background: transparent; color: var(--accent-gold); transform: scale(1.05); }
 
         .btn-choice {
-            background: rgba(0,0,0,0.85);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 1rem;
+            background: rgba(0,0,0,0.9);
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            padding: 1.5rem;
             text-align: left;
             width: 100%;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             transition: all 0.3s;
             pointer-events: auto;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            border-radius: 8px;
         }
-        .btn-choice:hover { border-color: var(--accent-gold); transform: translateX(10px); background: rgba(212,175,55,0.2); }
+        .btn-choice:hover { border-color: var(--accent-gold); transform: scale(1.02); background: rgba(212,175,55,0.2); }
 
+        /* BIGGER MAP */
         #map {
-            height: 160px; width: 100%;
-            filter: sepia(1) contrast(1.2) brightness(0.5);
-            border: 1px solid var(--accent-gold);
-            border-radius: 2px;
+            height: 350px; 
+            width: 100%;
+            filter: sepia(1) contrast(1.1) brightness(0.6);
+            border: 2px solid var(--accent-gold);
+            border-radius: 4px;
         }
 
         .stat-bar-container {
-            width: 80px; height: 4px;
+            width: 100px; height: 6px;
             background: rgba(255,255,255,0.1);
-            border-radius: 2px; overflow: hidden;
+            border-radius: 3px; overflow: hidden;
         }
 
         .sidebar {
-            width: 380px;
+            width: 420px;
             background: rgba(0,0,0,0.98);
             border-left: 1px solid var(--accent-gold);
             transition: transform 0.6s ease;
@@ -83,25 +86,25 @@
         .relative-card {
             background: rgba(212, 175, 55, 0.05);
             border: 1px solid rgba(212, 175, 55, 0.1);
-            padding: 0.6rem;
-            font-size: 0.8rem;
-            margin-bottom: 0.4rem;
+            padding: 0.8rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
         }
 
         .fact-badge {
             background: var(--accent-gold);
             color: #000;
-            font-size: 9px;
-            padding: 1px 6px;
+            font-size: 10px;
+            padding: 2px 8px;
             border-radius: 4px;
             text-transform: uppercase;
             font-weight: 800;
             display: inline-block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         #visual-portal {
-            width: 100%; height: 320px;
+            width: 100%; height: 280px;
             border-bottom: 1px solid var(--accent-gold);
             position: relative;
             overflow: hidden;
@@ -122,7 +125,7 @@
             z-index: 5;
             text-align: center;
             padding: 2.5rem;
-            max-width: 650px;
+            max-width: 700px;
             transition: opacity 1s ease;
         }
 
@@ -141,12 +144,12 @@
 
         .fact-ticker {
             white-space: nowrap;
-            font-size: 13px;
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 4px;
             color: var(--accent-gold);
             opacity: 0.9;
-            animation: ticker 1500s linear infinite;
+            animation: ticker 1800s linear infinite; /* EVEN SLOWER TICKER */
         }
 
         @keyframes ticker {
@@ -154,7 +157,7 @@
             to { transform: translateX(-100%); }
         }
 
-        .custom-scrollbar::-webkit-scrollbar { width: 3px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--accent-gold); }
         
         .cursor::after {
@@ -186,79 +189,79 @@
                 <div id="hud" class="absolute top-0 left-0 right-0 z-20 flex justify-between items-start p-6 opacity-0 transition-opacity duration-1000 pointer-events-none">
                     <div class="flex flex-col">
                         <span class="text-accent-gold uppercase tracking-[0.3em] text-[10px] font-bold">Chronicle</span>
-                        <h2 id="chapter-title" class="vintage-text text-xl text-white">...</h2>
-                        <p id="current-date" class="text-[10px] italic opacity-60">...</p>
+                        <h2 id="chapter-title" class="vintage-text text-2xl text-white">...</h2>
+                        <p id="current-date" class="text-[11px] italic opacity-60">...</p>
                     </div>
                     
-                    <div class="flex gap-4">
+                    <div class="flex gap-6">
                         <div class="flex flex-col items-end">
-                            <span class="text-[8px] uppercase tracking-widest opacity-60">Nationalism</span>
+                            <span class="text-[9px] uppercase tracking-widest opacity-60">Nationalism</span>
                             <div class="stat-bar-container mt-1"><div id="nat-bar" class="h-full bg-red-600 transition-all duration-700" style="width: 50%"></div></div>
                         </div>
                         <div class="flex flex-col items-end">
-                            <span class="text-[8px] uppercase tracking-widest opacity-60">Wisdom</span>
+                            <span class="text-[9px] uppercase tracking-widest opacity-60">Wisdom</span>
                             <div class="stat-bar-container mt-1"><div id="wis-bar" class="h-full bg-blue-500 transition-all duration-700" style="width: 50%"></div></div>
                         </div>
                         <div class="flex flex-col items-end">
-                            <span class="text-[8px] uppercase tracking-widest opacity-60">Progress</span>
-                            <span id="chap-counter" class="text-accent-gold font-bold text-[10px]">0 / 61</span>
+                            <span class="text-[9px] uppercase tracking-widest opacity-60">Epoch</span>
+                            <span id="chap-counter" class="text-accent-gold font-bold text-[11px]">0 / 61</span>
                         </div>
                     </div>
                 </div>
 
-                <div id="dialogue-box" class="mt-auto relative z-10 p-8 bg-gradient-to-t from-black via-black/95 to-transparent hidden">
+                <div id="dialogue-box" class="mt-auto relative z-10 p-10 bg-gradient-to-t from-black via-black/95 to-transparent hidden">
                     <div class="max-w-4xl mx-auto">
-                        <div id="fact-display" class="hidden"><span class="fact-badge">Historical Record</span></div>
-                        <p id="dialogue-name" class="text-accent-gold font-bold mb-2 uppercase tracking-[0.4em] text-[10px]"></p>
-                        <div id="text-container" class="min-h-[100px]">
-                            <p id="dialogue-text" class="text-2xl font-serif italic leading-relaxed mb-6"></p>
+                        <div id="fact-display" class="hidden"><span class="fact-badge">Historical Insight</span></div>
+                        <p id="dialogue-name" class="text-accent-gold font-bold mb-2 uppercase tracking-[0.4em] text-[11px]"></p>
+                        <div id="text-container" class="min-h-[120px]">
+                            <p id="dialogue-text" class="text-3xl font-serif italic leading-relaxed mb-8"></p>
                         </div>
                         
-                        <div id="dialogue-choices" class="grid grid-cols-1 md:grid-cols-2 gap-2 hidden mb-6"></div>
+                        <div id="dialogue-choices" class="grid grid-cols-1 gap-2 hidden mb-8"></div>
                         
                         <div id="dialogue-footer" class="flex justify-end">
-                            <button id="next-dialogue" class="btn-vintage">Continue &raquo;</button>
+                            <button id="next-dialogue" class="btn-vintage">Next Sequence &raquo;</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="main-menu" class="absolute inset-0 m-auto text-center z-30 p-12 flex flex-col justify-center bg-[#0a0806] items-center">
                     <div class="w-24 h-32 flex items-center justify-center border-2 border-accent-gold mb-6 shadow-2xl bg-[#1a0f0a]">
-                        <span class="vintage-text text-3xl text-accent-gold">JR</span>
+                        <span class="vintage-text text-4xl text-accent-gold">JR</span>
                     </div>
-                    <h1 class="text-7xl vintage-text mb-2 text-accent-gold tracking-tight">RIZAL</h1>
-                    <p class="text-sm italic mb-10 opacity-50 tracking-[0.5em] uppercase">The 100-Fact Odyssey</p>
-                    <button onclick="startGame()" class="btn-vintage text-lg px-12 py-3">Begin the Epic</button>
-                    <p class="text-[10px] mt-6 opacity-30 animate-pulse">AUDIO ENGINE CALIBRATING...</p>
+                    <h1 class="text-8xl vintage-text mb-2 text-accent-gold tracking-tighter">RIZAL</h1>
+                    <p class="text-lg italic mb-10 opacity-50 tracking-[0.6em] uppercase">The First Filipino</p>
+                    <button onclick="startGame()" class="btn-vintage text-2xl px-16 py-5">Begin the Odyssey</button>
+                    <p class="text-[12px] mt-8 opacity-40 animate-pulse uppercase tracking-[0.2em]">Cranking Audio Engine...</p>
                 </div>
             </div>
 
             <!-- Right Sidebar -->
             <div id="info-sidebar" class="sidebar flex flex-col h-full transform translate-x-full">
-                <div class="p-4 bg-black/50 border-b border-accent-gold/20">
-                    <h3 class="text-[9px] uppercase tracking-[0.2em] text-accent-gold mb-2 font-bold opacity-70">The World of the Malayan</h3>
+                <div class="p-6 bg-black/50 border-b border-accent-gold/20">
+                    <h3 class="text-[10px] uppercase tracking-[0.2em] text-accent-gold mb-3 font-bold opacity-70">Interactive Geochronology</h3>
                     <div id="map"></div>
                 </div>
-                <div class="flex-grow overflow-y-auto p-4 custom-scrollbar">
-                    <h3 class="text-[9px] uppercase tracking-[0.2em] text-accent-gold mb-4 font-bold border-b border-accent-gold/20 pb-1 text-center">Circle of Influence</h3>
+                <div class="flex-grow overflow-y-auto p-6 custom-scrollbar">
+                    <h3 class="text-[10px] uppercase tracking-[0.2em] text-accent-gold mb-4 font-bold border-b border-accent-gold/20 pb-2 text-center">Circle of Influence</h3>
                     <div id="relations-list" class="space-y-1"></div>
                 </div>
-                <div class="p-4 bg-black border-t border-accent-gold/20 text-center">
-                    <span id="rizal-status" class="text-[10px] opacity-40 uppercase tracking-widest">Awaiting Destiny</span>
+                <div class="p-6 bg-black border-t border-accent-gold/20 text-center">
+                    <span id="rizal-status" class="text-[12px] text-accent-gold uppercase tracking-widest font-bold">Awaiting Destiny</span>
                 </div>
             </div>
         </div>
 
         <div id="end-screen" class="absolute inset-0 m-auto text-center z-50 bg-[#0a0806] p-12 hidden flex flex-col justify-center items-center">
-            <h2 id="final-title" class="text-4xl vintage-text mb-4 text-accent-gold">Ultimo Adiós</h2>
-            <div class="max-w-2xl mx-auto mb-10 text-lg leading-relaxed italic opacity-80" id="end-message"></div>
-            <button onclick="location.reload()" class="btn-vintage w-48">Return to History</button>
+            <h2 id="final-title" class="text-5xl vintage-text mb-4 text-accent-gold">Ultimo Adiós</h2>
+            <div class="max-w-2xl mx-auto mb-10 text-2xl leading-relaxed italic opacity-80" id="end-message"></div>
+            <button onclick="location.reload()" class="btn-vintage w-64 text-xl">Relive History</button>
         </div>
     </div>
 
 <script>
 /**
- * AUDIO ENGINE - MAX AMPLIFICATION
+ * AUDIO ENGINE - MAX VOLUME CALIBRATION
  */
 class AudioEngine {
     constructor() {
@@ -274,8 +277,9 @@ class AudioEngine {
         this.ctx = new (window.AudioContext || window.webkitAudioContext)();
         if (this.ctx.state === 'suspended') await this.ctx.resume();
         this.createAmbience();
-        this.playNote(440, 'sine', 1, 0.5);
-        setTimeout(() => this.playNote(880, 'sine', 0.5, 0.4), 200);
+        this.playNote(440, 'sine', 0.8, 0.5);
+        setTimeout(() => this.playNote(554.37, 'sine', 0.8, 0.4), 200);
+        setTimeout(() => this.playNote(659.25, 'sine', 1.0, 0.3), 400);
     }
 
     createAmbience() {
@@ -283,18 +287,14 @@ class AudioEngine {
         const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
         const output = noiseBuffer.getChannelData(0);
         for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
-
         const whiteNoise = this.ctx.createBufferSource();
         whiteNoise.buffer = noiseBuffer;
         whiteNoise.loop = true;
-
         const filter = this.ctx.createBiquadFilter();
         filter.type = 'lowpass';
         filter.frequency.value = 500;
-
         const noiseGain = this.ctx.createGain();
-        noiseGain.gain.value = 0.15; // Increased base floor
-
+        noiseGain.gain.value = 0.15;
         whiteNoise.connect(filter);
         filter.connect(noiseGain);
         noiseGain.connect(this.ctx.destination);
@@ -325,15 +325,15 @@ class AudioEngine {
         osc.stop(this.ctx.currentTime + duration);
     }
 
-    playTypewriter() { this.playNote(800 + Math.random() * 200, 'square', 0.05, 0.25); }
-    playTransition() { this.playNote(140, 'sine', 1.5, 0.6); }
+    playTypewriter() { this.playNote(800 + Math.random() * 400, 'square', 0.05, 0.25); }
+    playTransition() { this.playNote(120, 'sine', 1.5, 0.7); }
 
     playSceneAmbient(scene) {
         if (!this.enabled || !this.ctx) return;
         this.updateAmbience(scene);
         if (this.currentInterval) clearInterval(this.currentInterval);
         const freqs = { nature: [261.63, 392.00], city: [440.00, 523.25], somber: [130.81, 196.00], tension: [329.63, 440.00] }[scene] || [261];
-        this.currentInterval = setInterval(() => { this.playNote(freqs[Math.floor(Math.random() * freqs.length)], 'sine', 5, 0.3); }, 3500);
+        this.currentInterval = setInterval(() => { this.playNote(freqs[Math.floor(Math.random() * freqs.length)], 'sine', 5, 0.4); }, 3500);
     }
 }
 const audio = new AudioEngine();
@@ -403,18 +403,15 @@ const CHAPTERS = [
     { id: "1", title: "Birth in Calamba", date: "June 19, 1861", age: "0", lat: 14.212, lng: 121.168, bg: "#2c1e14", audio: "nature", status: "Newborn" },
     { id: "2", title: "Childhood by the Lake", date: "1864", age: "3", lat: 14.215, lng: 121.170, bg: "#2c1e14", audio: "nature", status: "Young Pepe" },
     { id: "3", title: "The Moth Story", date: "1866", age: "5", lat: 14.212, lng: 121.168, bg: "#3e2723", audio: "nature", status: "Student" },
-    { id: "4", title: "The Shoreline Wanderer", date: "1868", age: "7", lat: 14.212, lng: 121.168, bg: "#2c1e14", audio: "nature", status: "Dreamer" },
+    { id: "4", title: "Shoreline Wanderer", date: "1868", age: "7", lat: 14.212, lng: 121.168, bg: "#2c1e14", audio: "nature", status: "Dreamer" },
     { id: "5", title: "The First Poem", date: "1869", age: "8", lat: 14.212, lng: 121.168, bg: "#2c1e14", audio: "nature", status: "Poet" },
     { id: "6", title: "Schooling in Binan", date: "1870", age: "9", lat: 14.333, lng: 121.083, bg: "#2c1e14", audio: "nature", status: "Pupil" },
     { id: "7", title: "The Maestro's Lash", date: "1871", age: "10", lat: 14.333, lng: 121.083, bg: "#3e2723", audio: "nature", status: "Survivor" },
     { id: "8", title: "Entering Ateneo", date: "1872", age: "11", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Ateneano" },
-    { id: "9", title: "Jesuit Discipline", date: "1873", age: "12", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Interno" },
     { id: "10", title: "Roman Empire Rank", date: "1874", age: "13", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Emperor" },
-    { id: "12", title: "Graduation Honor", date: "1877", age: "16", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Graduate" },
+    { id: "12", title: "Sobresaliente Graduate", date: "1877", age: "16", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Graduate" },
     { id: "13", title: "UST Philosophy", date: "1877", age: "16", lat: 14.609, lng: 120.989, bg: "#2d3436", audio: "city", status: "Freshman" },
-    { id: "14", title: "Medical Studies", date: "1878", age: "17", lat: 14.609, lng: 120.989, bg: "#2d3436", audio: "city", status: "Medic" },
     { id: "15", title: "First Love: Segunda", date: "1877", age: "16", lat: 13.941, lng: 121.164, bg: "#3e2723", audio: "nature", status: "Suitor" },
-    { id: "16", title: "Leonor Rivera", date: "1879", age: "18", lat: 15.485, lng: 120.592, bg: "#3e2723", audio: "nature", status: "Betrothed" },
     { id: "19", title: "Secret Departure", date: "May 1, 1882", age: "21", lat: 14.594, lng: 120.970, bg: "#0f0b08", audio: "tension", status: "Voyager" },
     { id: "24", title: "Madrid University", date: "Nov 1882", age: "21", lat: 40.416, lng: -3.703, bg: "#1e272e", audio: "city", status: "Scholar" },
     { id: "29", title: "Heidelberg Spring", date: "1886", age: "25", lat: 49.412, lng: 8.710, bg: "#2c3e50", audio: "nature", status: "German Student" },
@@ -425,27 +422,30 @@ const CHAPTERS = [
 ];
 
 const storyData = {
-    "1": [{ name: "Narrator", text: "June 19, 1861. A moonlit Wednesday in Calamba. You are born to Francisco and Teodora. Your large head marks you as a child of deep thought.", choices: [{ text: "Gaze at the moon.", stat: "wisdom", val: 10, rel: { name: "Teodora Alonso", role: "Mother", age: 34 } }, { text: "Cry for your father.", stat: "nationalism", val: 5, rel: { name: "Francisco Mercado", role: "Father", age: 43 } }] }],
-    "3": [{ name: "Doña Teodora", text: "Look at the moth, Pepe. It seeked the light and found only the flame. Do you understand the risk of curiosity?", choices: [{ text: "Light is worth any risk.", stat: "nationalism", val: 15 }, { text: "I will learn from its charred wings.", stat: "wisdom", val: 15 }] }],
-    "6": [{ name: "Maestro Justiniano", text: "You are small, Rizal, but your brain is sharp. The other boys mock your height. How do you respond?", choices: [{ text: "Outsmart them in the classroom.", stat: "wisdom", val: 15 }, { text: "Wrestle them to show your strength.", stat: "nationalism", val: 10 }] }],
-    "8": [{ name: "Paciano", text: "To keep you safe from the friars, you must use the name 'Rizal'. It means a green field of harvest.", choices: [{ text: "Embrace the new identity.", stat: "nationalism", val: 10, rel: { name: "Paciano Rizal", role: "Brother", age: 21 } }, { text: "Honor the name Mercado.", stat: "wisdom", val: 5 }] }],
-    "15": [{ name: "Segunda Katigbak", text: "I must marry another, Jose. It is the custom of our families. Will you fight for me?", choices: [{ text: "Accept the duty to my studies.", stat: "wisdom", val: 15, rel: { name: "Segunda Katigbak", role: "First Love", age: 14 } }, { text: "Declare my undying love.", stat: "nationalism", val: 10 }] }],
-    "34": [{ name: "Maximo Viola", text: "Jose, you look like a ghost. You haven't eaten for days to print this book. Take the money.", choices: [{ text: "Print the Noli immediately.", stat: "nationalism", val: 30, rel: { name: "Maximo Viola", role: "Savior of Noli", age: 30 } }, { text: "Save the money for food.", stat: "wisdom", val: 10 }] }],
-    "54": [{ name: "The Guard", text: "You are exiled to Dapitan. You could spend your days in peace. What is your first priority?", choices: [{ text: "Build a school for the local boys.", stat: "wisdom", val: 25 }, { text: "Build a clinic to heal the poor.", stat: "nationalism", val: 20 }] }],
-    "61": [{ name: "The Captain", text: "Face the sea, traitor. We shoot traitors in the back.", choices: [{ text: "Refuse and face the sun.", stat: "nationalism", val: 50 }, { text: "Die with a silent prayer.", stat: "wisdom", val: 50 }] }]
+    "1": [{ name: "Narrator", text: "June 19, 1861. A moonlit Wednesday in Calamba. You are born to Francisco and Teodora. Your large head marks you as a child of deep thought.", choices: [{ text: "Gaze at the moon and wonder about the heavens.", stat: "wisdom", val: 10, rel: { name: "Teodora Alonso", role: "Mother", age: 34 } }, { text: "Focus on the faces of your family gathered around you.", stat: "nationalism", val: 5, rel: { name: "Francisco Mercado", role: "Father", age: 43 } }] }],
+    "3": [{ name: "Doña Teodora", text: "Look at the moth, Pepe. It seeked the light and found only the flame. Do you understand the risk of curiosity?", choices: [{ text: "The light is worth any risk for the sake of truth.", stat: "nationalism", val: 15 }, { text: "I will learn from its charred wings and proceed with caution.", stat: "wisdom", val: 15 }] }],
+    "4": [{ name: "Narrator", text: "By the shores of Laguna de Bay, you watch the boats drift toward Manila. The horizon calls to you.", choices: [{ text: "Dream of the scientific wonders beyond the sea.", stat: "wisdom", val: 10 }, { text: "Think of the struggling fishermen and their heavy taxes.", stat: "nationalism", val: 15 }] }],
+    "6": [{ name: "Maestro Justiniano", text: "You are small, Rizal, but your brain is sharp. The other boys mock your height. How do you respond?", choices: [{ text: "Outsmart them in the classroom and prove intellectual superiority.", stat: "wisdom", val: 15 }, { text: "Wrestle them to show that an 'Indio' can be physically strong.", stat: "nationalism", val: 10 }] }],
+    "8": [{ name: "Paciano", text: "To keep you safe from the friars, you must use the name 'Rizal'. It means a green field of harvest.", choices: [{ text: "Embrace the new identity as a badge of the new generation.", stat: "nationalism", val: 10, rel: { name: "Paciano Rizal", role: "Brother", age: 21 } }, { text: "Keep the name Mercado in your heart as a link to tradition.", stat: "wisdom", val: 5 }] }],
+    "15": [{ name: "Segunda Katigbak", text: "I must marry another, Jose. It is the custom of our families. Will you fight for me?", choices: [{ text: "Accept the duty to my studies; a doctor must remain objective.", stat: "wisdom", val: 15, rel: { name: "Segunda Katigbak", role: "First Love", age: 14 } }, { text: "Declare that my heart is wounded by the injustice of our traditions.", stat: "nationalism", val: 10 }] }],
+    "24": [{ name: "Narrator", text: "In Madrid, you are starving. You have only 2 pesetas left. Do you buy a used book on surgery or a hot meal?", choices: [{ text: "Buy the book. Knowledge is the only hunger that matters.", stat: "wisdom", val: 25 }, { text: "Buy the meal. I must remain healthy to serve the Propaganda.", stat: "nationalism", val: 10 }] }],
+    "34": [{ name: "Maximo Viola", text: "Jose, you look like a ghost. You haven't eaten for days to print this book. Take the money.", choices: [{ text: "Accept the funds and print the 'Noli' immediately for the masses.", stat: "nationalism", val: 30, rel: { name: "Maximo Viola", role: "Savior of Noli", age: 30 } }, { text: "Hesitate, fearing that the book might bring death to your family.", stat: "wisdom", val: 5 }] }],
+    "41": [{ name: "Seiko Usui", text: "Stay with me in Tokyo, Jose-san. You could be a great diplomat here. Why return to a country that wants you dead?", choices: [{ text: "Stay for love and the peace of the East.", stat: "wisdom", val: 15, rel: { name: "Seiko Usui", role: "O-Sei-San", age: 22 } }, { text: "I must return. My country is the only bride I can truly claim.", stat: "nationalism", val: 40 }] }],
+    "54": [{ name: "The Guard", text: "You are exiled to Dapitan. You could spend your days in peace. What is your first priority?", choices: [{ text: "Build a school to educate the next generation of Filipinos.", stat: "wisdom", val: 30 }, { text: "Build a free clinic to heal the suffering of the poor.", stat: "nationalism", val: 25 }] }],
+    "61": [{ name: "The Captain", text: "Face the sea, traitor. We shoot traitors in the back.", choices: [{ text: "Refuse. Twist your body as you fall to die facing the sun.", stat: "nationalism", val: 50 }, { text: "Die with a silent prayer for the enlightenment of the youth.", stat: "wisdom", val: 50 }] }]
 };
 
-// Filling logic with more choices
+// Filling remaining chapters with varied unique choices
 for (let i = 1; i <= 61; i++) {
     const id = i.toString();
     if (!storyData[id]) {
         const chap = CHAPTERS.find(c => c.id === id) || { title: "Historical Passage", age: "N/A" };
         storyData[id] = [{ 
             name: "Narrator", 
-            text: `Rizal is immersed in: ${chap.title}. A moment for reflection on his destiny arises.`, 
+            text: `Rizal is now at age ${chap.age || 'N/A'}, navigating ${chap.title}. He must decide his next focus.`, 
             choices: [
-                { text: "Seek intellectual growth in this era.", stat: "wisdom", val: 10 },
-                { text: "Prioritize the plight of the Filipino people.", stat: "nationalism", val: 10 }
+                { text: `Delve deeper into the scientific mysteries of ${chap.title}.`, stat: "wisdom", val: 10 },
+                { text: `Observe the social inequities of ${chap.title} and document them.`, stat: "nationalism", val: 10 }
             ] 
         }];
     }
@@ -468,7 +468,7 @@ async function startGame() {
 function updateMap(lat, lng, zoom = 12) {
     if (!map) return;
     map.flyTo([lat, lng], zoom, { duration: 3 });
-    L.circleMarker([lat, lng], { radius: 5, color: '#d4af37', fillColor: '#d4af37', fillOpacity: 0.8 }).addTo(map);
+    L.circleMarker([lat, lng], { radius: 6, color: '#d4af37', fillColor: '#d4af37', fillOpacity: 0.8 }).addTo(map);
 }
 
 function initChapter(idx) {
@@ -483,7 +483,7 @@ function initChapter(idx) {
     document.getElementById('chap-counter').innerText = `${idx + 1} / 61`;
     const portal = document.getElementById('visual-portal');
     portal.style.background = `linear-gradient(180deg, ${chap.bg || '#2c1e14'} 0%, #000 100%)`;
-    updateMap(chap.lat, chap.lng, (idx > 18 && idx < 51) ? 4 : 12);
+    updateMap(chap.lat, chap.lng, (idx > 12 && idx < 51) ? 4 : 14);
     audio.playSceneAmbient(chap.audio);
     updatePortalQuote();
     showDialogue();
@@ -495,8 +495,8 @@ function addRelation(rel) {
     const list = document.getElementById('relations-list');
     const card = document.createElement('div');
     card.className = 'relative-card dialogue-appear';
-    card.innerHTML = `<div class="text-accent-gold font-bold text-[11px]">${rel.name}</div>
-        <div class="flex justify-between text-[9px] opacity-60"><span>${rel.role}</span><span>Age: ${rel.age}</span></div>`;
+    card.innerHTML = `<div class="text-accent-gold font-bold text-[13px]">${rel.name}</div>
+        <div class="flex justify-between text-[11px] opacity-60"><span>${rel.role}</span><span>Age: ${rel.age}</span></div>`;
     list.prepend(card);
 }
 
@@ -525,7 +525,7 @@ function showDialogue() {
         if (i < d.text.length) {
             textEl.innerText += d.text.charAt(i);
             if (i % 2 === 0) audio.playTypewriter();
-            i++; typewriterTimeout = setTimeout(type, 15);
+            i++; typewriterTimeout = setTimeout(type, 12); // Slightly faster type for big text
         } else {
             textEl.classList.remove('cursor');
             if (d.choices) {
