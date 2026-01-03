@@ -49,15 +49,16 @@
         .btn-choice {
             background: rgba(0,0,0,0.85);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 0.8rem;
+            padding: 1rem;
             text-align: left;
             width: 100%;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
             transition: all 0.3s;
             pointer-events: auto;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
-        .btn-choice:hover { border-color: var(--accent-gold); transform: translateX(10px); background: rgba(212,175,55,0.15); }
+        .btn-choice:hover { border-color: var(--accent-gold); transform: translateX(10px); background: rgba(212,175,55,0.2); }
 
         #map {
             height: 160px; width: 100%;
@@ -67,14 +68,14 @@
         }
 
         .stat-bar-container {
-            width: 80px; height: 3px;
+            width: 80px; height: 4px;
             background: rgba(255,255,255,0.1);
             border-radius: 2px; overflow: hidden;
         }
 
         .sidebar {
-            width: 360px;
-            background: rgba(0,0,0,0.97);
+            width: 380px;
+            background: rgba(0,0,0,0.98);
             border-left: 1px solid var(--accent-gold);
             transition: transform 0.6s ease;
         }
@@ -140,12 +141,12 @@
 
         .fact-ticker {
             white-space: nowrap;
-            font-size: 12px;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             color: var(--accent-gold);
-            opacity: 0.8;
-            animation: ticker 800s linear infinite;
+            opacity: 0.9;
+            animation: ticker 1500s linear infinite;
         }
 
         @keyframes ticker {
@@ -169,11 +170,12 @@
     <div id="game-container">
         <div class="flex h-full w-full">
             
+            <!-- Left Side -->
             <div class="flex-grow flex flex-col h-full relative overflow-hidden">
                 <div id="visual-portal">
                     <canvas id="canvas-overlay"></canvas>
                     <div id="quote-display">
-                        <p id="portal-quote" class="vintage-text text-3xl italic text-accent-gold mb-2 transition-all duration-1000"></p>
+                        <p id="portal-quote" class="vintage-text text-3xl italic text-accent-gold mb-2"></p>
                         <p id="portal-author" class="text-[11px] uppercase tracking-[0.4em] opacity-40"></p>
                     </div>
                     <div class="fact-ticker-container">
@@ -205,14 +207,14 @@
                 </div>
 
                 <div id="dialogue-box" class="mt-auto relative z-10 p-8 bg-gradient-to-t from-black via-black/95 to-transparent hidden">
-                    <div class="max-w-3xl mx-auto">
+                    <div class="max-w-4xl mx-auto">
                         <div id="fact-display" class="hidden"><span class="fact-badge">Historical Record</span></div>
                         <p id="dialogue-name" class="text-accent-gold font-bold mb-2 uppercase tracking-[0.4em] text-[10px]"></p>
                         <div id="text-container" class="min-h-[100px]">
                             <p id="dialogue-text" class="text-2xl font-serif italic leading-relaxed mb-6"></p>
                         </div>
                         
-                        <div id="dialogue-choices" class="space-y-1 hidden mb-6"></div>
+                        <div id="dialogue-choices" class="grid grid-cols-1 md:grid-cols-2 gap-2 hidden mb-6"></div>
                         
                         <div id="dialogue-footer" class="flex justify-end">
                             <button id="next-dialogue" class="btn-vintage">Continue &raquo;</button>
@@ -227,10 +229,11 @@
                     <h1 class="text-7xl vintage-text mb-2 text-accent-gold tracking-tight">RIZAL</h1>
                     <p class="text-sm italic mb-10 opacity-50 tracking-[0.5em] uppercase">The 100-Fact Odyssey</p>
                     <button onclick="startGame()" class="btn-vintage text-lg px-12 py-3">Begin the Epic</button>
-                    <p class="text-[10px] mt-6 opacity-30 animate-pulse">SOUND SYSTEM READY</p>
+                    <p class="text-[10px] mt-6 opacity-30 animate-pulse">AUDIO ENGINE CALIBRATING...</p>
                 </div>
             </div>
 
+            <!-- Right Sidebar -->
             <div id="info-sidebar" class="sidebar flex flex-col h-full transform translate-x-full">
                 <div class="p-4 bg-black/50 border-b border-accent-gold/20">
                     <h3 class="text-[9px] uppercase tracking-[0.2em] text-accent-gold mb-2 font-bold opacity-70">The World of the Malayan</h3>
@@ -247,9 +250,6 @@
         </div>
 
         <div id="end-screen" class="absolute inset-0 m-auto text-center z-50 bg-[#0a0806] p-12 hidden flex flex-col justify-center items-center">
-             <div class="w-24 h-32 flex items-center justify-center border-2 border-accent-gold mb-8 shadow-2xl bg-[#1a0f0a]">
-                <span class="vintage-text text-4xl text-accent-gold">1896</span>
-            </div>
             <h2 id="final-title" class="text-4xl vintage-text mb-4 text-accent-gold">Ultimo Adiós</h2>
             <div class="max-w-2xl mx-auto mb-10 text-lg leading-relaxed italic opacity-80" id="end-message"></div>
             <button onclick="location.reload()" class="btn-vintage w-48">Return to History</button>
@@ -257,6 +257,9 @@
     </div>
 
 <script>
+/**
+ * AUDIO ENGINE - MAX AMPLIFICATION
+ */
 class AudioEngine {
     constructor() {
         this.ctx = null;
@@ -271,8 +274,8 @@ class AudioEngine {
         this.ctx = new (window.AudioContext || window.webkitAudioContext)();
         if (this.ctx.state === 'suspended') await this.ctx.resume();
         this.createAmbience();
-        this.playNote(440, 'sine', 0.5, 0.4);
-        setTimeout(() => this.playNote(660, 'sine', 0.5, 0.3), 150);
+        this.playNote(440, 'sine', 1, 0.5);
+        setTimeout(() => this.playNote(880, 'sine', 0.5, 0.4), 200);
     }
 
     createAmbience() {
@@ -290,7 +293,7 @@ class AudioEngine {
         filter.frequency.value = 500;
 
         const noiseGain = this.ctx.createGain();
-        noiseGain.gain.value = 0.08;
+        noiseGain.gain.value = 0.15; // Increased base floor
 
         whiteNoise.connect(filter);
         filter.connect(noiseGain);
@@ -301,8 +304,8 @@ class AudioEngine {
 
     updateAmbience(scene) {
         if (!this.noiseNode || !this.ctx) return;
-        const targetFreq = scene === 'city' ? 1200 : scene === 'nature' ? 400 : scene === 'tension' ? 200 : 300;
-        const targetGain = scene === 'city' ? 0.12 : 0.08;
+        const targetFreq = scene === 'city' ? 1400 : scene === 'nature' ? 450 : 250;
+        const targetGain = scene === 'city' ? 0.2 : 0.15;
         this.noiseNode.filter.frequency.exponentialRampToValueAtTime(targetFreq, this.ctx.currentTime + 3);
         this.noiseNode.gain.gain.linearRampToValueAtTime(targetGain, this.ctx.currentTime + 3);
     }
@@ -322,229 +325,129 @@ class AudioEngine {
         osc.stop(this.ctx.currentTime + duration);
     }
 
-    playTypewriter() { 
-        if (!this.enabled || !this.ctx) return; 
-        this.playNote(700 + Math.random() * 300, 'square', 0.06, 0.15); 
-    }
-    
-    playTransition() { 
-        if (!this.enabled || !this.ctx) return; 
-        this.playNote(150, 'sine', 1.2, 0.4); 
-        this.playNote(300, 'sine', 0.6, 0.2);
-    }
+    playTypewriter() { this.playNote(800 + Math.random() * 200, 'square', 0.05, 0.25); }
+    playTransition() { this.playNote(140, 'sine', 1.5, 0.6); }
 
     playSceneAmbient(scene) {
         if (!this.enabled || !this.ctx) return;
         this.updateAmbience(scene);
         if (this.currentInterval) clearInterval(this.currentInterval);
-        
-        const sceneFreqs = { 
-            nature: [261.63, 329.63, 392.00, 523.25], 
-            city: [293.66, 440.00, 587.33, 783.99], 
-            somber: [130.81, 196.00, 155.56, 261.63], 
-            tension: [329.63, 415.30, 440.00, 311.13] 
-        };
-        const freqs = sceneFreqs[scene] || sceneFreqs.nature;
-        
-        this.currentInterval = setInterval(() => { 
-            this.playNote(freqs[Math.floor(Math.random() * freqs.length)], 'sine', 6, 0.15); 
-        }, 4000);
+        const freqs = { nature: [261.63, 392.00], city: [440.00, 523.25], somber: [130.81, 196.00], tension: [329.63, 440.00] }[scene] || [261];
+        this.currentInterval = setInterval(() => { this.playNote(freqs[Math.floor(Math.random() * freqs.length)], 'sine', 5, 0.3); }, 3500);
     }
 }
 const audio = new AudioEngine();
 
 const HISTORICAL_FACTS = [
-    "Rizal was only 5'3\" tall.", "He mastered 22 languages including Hebrew and Sanskrit.", "He was a champion fencer.", 
-    "He discovered the Draco rizali (flying lizard).", "He discovered Rhacophorus rizali (frog).", "He discovered Apogonia rizali (beetle).",
-    "He once challenged Antonio Luna to a duel over Nellie Boustead.", "He won 6,200 pesos in the lottery during his exile in Dapitan.",
-    "He operated on his mother's cataracts twice.", "He wrote his first poem 'Sa Aking Mga Kababata' at age 8.",
-    "He was an expert marksman with a pistol.", "He was a member of the Berlin Anthropological Society.", 
-    "He once spent his last few cents in Berlin on a lottery ticket.", "He could draw a map of the entire Philippines from memory.",
-    "He was a weightlifter and gymnast.", "He had a waistline of only 25-26 inches.", "He weighed about 130 lbs.",
-    "He was the first Asian to describe a new species in a scientific journal.", "He mastered Japanese (Nihongo) in just one month.",
-    "He was a conchologist and collected over 340 shells.", "He was an expert in Arnis and Kali.", "He played the flute.",
-    "He composed a song called 'Alin Mang Lahi'.", "He was a freemason (Logia de la Solidaridad).", "He invented a brick-making machine in Dapitan.",
-    "He invented a wooden cigarette lighter called 'Sulpukan'.", "He was a licensed land surveyor.", "He designed the Dapitan town plaza.",
-    "He was a doctor, farmer, teacher, and merchant all at once in Dapitan.", "His head was unusually large as a child.",
-    "He was a caricaturist and theater director.", "He was a philologist and ethnologist.", "He wrote a grammar of the Tagalog language.",
-    "He once ate only bread and coffee for a month in Europe.", "He was a polyglot, polymath, and nationalist.",
-    "His son with Josephine Bracken, Francisco, died shortly after birth.", "He was the 7th of 11 children.",
-    "His middle name was Protasio, after a saint whose feast day is June 19.", "He used lottery winnings to build a hospital in Dapitan.",
-    "He once studied under the famous Dr. Louis de Wecker in Paris.", "He was an assistant to Dr. Otto Becker in Heidelberg.",
-    "He loved 9 women, including O-Sei-San and Leonor Rivera.", "He hid his final poem in an alcohol cooking lamp.",
-    "He twisted his body to fall face-up when shot, refusing to be a traitor.", "He was the 'Pride of the Malay Race'.",
-    "He was a visionary who predicted the rise of America in the Pacific.", "He was a traveler who visited 3 continents.",
-    "He was a master of calligraphy.", "He was a botanist who collected hundreds of plants.", "He was a historian who annotated Morga's Sucesos.",
-    "He was the first to use the term 'Filipino' to refer to natives.", "He was a student of Latin and Greek at age 8.",
-    "He graduated 'Sobresaliente' from Ateneo Municipal.", "He was a member of the Berlin Geographical Society.",
-    "He was a caricaturist who drew his own travels.", "He was a sociologist who analyzed the indolence of the Filipinos.",
-    "He was a political scientist who envisioned a free Philippines.", "He was a reformer of the mind and spirit.",
-    "He was a master fencer who trained with the best in Europe.", "He was a sharpshooter who practiced daily.",
-    "He was a sculptor of 'The Triumph of Science over Death'.", "He was a woodcarver of 'Sacred Heart'.",
-    "He was a painter who studied at the Academia de San Fernando.", "He was a dramatist who wrote 'Junto al Pasig'.",
-    "He was an essayist who wrote 'The Philippines a Century Hence'.", "He was a novelist who wrote the GOSPELS of the nation.",
-    "He was a psychologist who understood the trauma of colonization.", "He was a beacon of hope for his countrymen.",
-    "He was a symbol of the struggle against 300 years of colonial rule.", "He was a polyglot who could translate Hebrew to Tagalog.",
-    "He was a master of self-discipline and schedule.", "He was a believer in the power of the youth.",
-    "He was a religious reformer who challenged the power of the friars.", "He was a Master Mason of the highest degree.",
-    "He was a diplomat who represented his people in foreign lands.", "He was a secret agent for the Propaganda Movement.",
-    "He was a martyr whose death was the birth of the Republic.", "He was a citizen of the world with a heart for the islands.",
-    "He was a humanist who valued every man's dignity.", "He was a pragmatist in his approach to community building.",
-    "He was an architect of the Filipino identity.", "He was a student of the world to heal his own nation.",
-    "He was an ophthalmologist who restored his mother's sight twice.", "He was a poet whose verses are the national heartbeat.",
-    "He was a traveler who walked the streets of London and Berlin.", "He was a resident of Dapitan for 4 years.",
-    "He was a prisoner in Fort Santiago.", "He was a hero of the mind, then a hero of the people.",
-    "He was a legend whose name is etched in every town square.", "He was a visionary who saw the Philippines as a jewel.",
-    "He was a dreamer who saw a free and equal race.", "He was a man of the sun, who died facing the light.",
-    "He was a polymath who excelled in every field he touched.", "He was a master of his own fate.",
-    "He was the First Filipino.", "He was Jose Rizal.", "He lives on in the spirit of every free Filipino.", "Consummatum Est."
+    "Rizal was only 5'3\" tall.", "He mastered 22 languages.", "He discovered the Draco rizali lizard.", "He won 6,200 pesos in the lottery.",
+    "He operated on his mother's eyes twice.", "He wrote his first poem at age 8.", "He was a champion fencer.", "He mastered Japanese in 1 month.",
+    "He was a conchologist with 340 shells.", "He played the flute.", "He invented a brick-making machine.", "He was a licensed land surveyor.",
+    "His son Francisco died at birth.", "He was the 7th of 11 children.", "He used invisible ink to write love letters.", "He was a freemason.",
+    "He stood at attention while facing the firing squad.", "He was the 'Pride of the Malay Race'.", "He visited America in 1888.",
+    "He annotated Morga's Sucesos in London.", "He was a sculptor of 'The Triumph of Science over Death'.", "He spoke Hebrew and Sanskrit.",
+    "He ate only one meal a day to print Noli.", "He hid his final poem in a lamp.", "His head was large for his body as a baby.",
+    "He was the First Filipino.", "He founded La Liga Filipina.", "He was exiled to Dapitan for 4 years.", "He was only 35 when he died.",
+    "He translated the works of Schiller to Tagalog.", "He was a master of Arnis.", "He nearly dueled Antonio Luna over a girl.",
+    "He was an expert marksman with a pistol.", "He was a member of the Berlin Anthropological Society.", "He weightlifted to build his small frame.",
+    "He predicted the rise of America.", "He practiced medicine in Hong Kong.", "He stayed at the Grand Hotel in Tokyo.",
+    "He drew his own illustrations for his novels.", "He had a waistline of only 25 inches.", "His pulse was normal at execution.",
+    "He was a caricaturist and sculptor.", "He could draw a map of the PH from memory.", "He wrote Tagalog grammar in German.",
+    "He was the first to use 'Filipino' for natives.", "He died facing the sun.", "Consummatum Est were his last words.",
+    "Rizal's actual favorite meal was sardinas secas (tuyo).", "He was a master of calligraphy.", "He studied at the Central University of Madrid.",
+    "He once spent his last few cents on a lottery ticket in Berlin.", "He was a member of the Berlin Ethnographical Society.",
+    "He once treated the blind husband of Josephine Bracken.", "He taught boys in Dapitan without charging tuition.",
+    "He designed the relief map of Mindanao in Dapitan plaza.", "He was a licensed land surveyor and engineer.",
+    "He translated Hans Christian Andersen's tales into Tagalog.", "He was the first to analyze the Indolence of the Filipinos.",
+    "He was a gifted woodcarver since age 5.", "He once lived at No. 37 Chalcot Crescent, London.",
+    "He annoted the 1609 Sucesos de las Islas Filipinas by Antonio de Morga.", "He was a student of the prestigious Ateneo Municipal.",
+    "He was the first to use the concept of a 'National Hero' for the Philippines.", "He was shot at Bagumbayan, now Rizal Park.",
+    "He once studied the sociology of the Filipino people in Paris.", "He was a friend of the German scientist Rudolf Virchow.",
+    "He loved animals and had a dog named Usman in Dapitan.", "He was a master of the Arnis system of fighting.",
+    "He predicted the Philippine Revolution would happen in 1891.", "He was a critic of the colonial Spanish friars.",
+    "He was a champion of education for both men and women.", "He was a polymath who excelled in almost 20 different fields.",
+    "His novel El Filibusterismo was dedicated to the GOMBURZA priests.", "His Noli Me Tangere was inspired by Uncle Tom's Cabin.",
+    "He was a frequent traveler who visited Hong Kong, Macau, and Japan.", "He was the founder of the secret society La Liga Filipina.",
+    "He was a believer in the equality of races.", "He was a humanist who valued human dignity above all.",
+    "His last words were spoken in Latin.", "He was a student of the prestigious University of Santo Tomas.",
+    "He was an expert in the study of tropical diseases.", "He was a collector of indigenous Filipino artifacts.",
+    "He was a man of peace who died for a cause of freedom.", "He was the Greatest Man of the Malayan Race."
 ];
 
 let particles = [];
+let map;
+
+function initMap() {
+    if (map) return;
+    map = L.map('map', { zoomControl: false, attributionControl: false }).setView([14.2, 121.1], 10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+}
+
 function initPortalEffects() {
     const canvas = document.getElementById('canvas-overlay');
     const ctx = canvas.getContext('2d');
     canvas.width = canvas.parentElement.clientWidth;
     canvas.height = canvas.parentElement.clientHeight;
-
     class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 1.2;
-            this.vy = (Math.random() - 0.5) * 1.2;
-            this.size = Math.random() * 4 + 1;
-            this.alpha = Math.random() * 0.8;
-        }
-        update() {
-            this.x += this.vx; this.y += this.vy;
-            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
-        draw() {
-            ctx.fillStyle = `rgba(212, 175, 55, ${this.alpha})`;
-            ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-        }
+        constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.vx = (Math.random()-0.5)*1.5; this.vy = (Math.random()-0.5)*1.5; this.size = Math.random()*4+1; }
+        update() { this.x += this.vx; this.y += this.vy; if (this.x<0 || this.x>canvas.width) this.vx*=-1; if (this.y<0 || this.y>canvas.height) this.vy*=-1; }
+        draw() { ctx.fillStyle = `rgba(212, 175, 55, 0.6)`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
     }
-    for (let i = 0; i < 70; i++) particles.push(new Particle());
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(animate);
-    }
+    for (let i=0; i<80; i++) particles.push(new Particle());
+    function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
     animate();
-
     const ticker = document.getElementById('fact-ticker');
-    ticker.innerText = HISTORICAL_FACTS.join(" • ") + " • " + HISTORICAL_FACTS.join(" • ");
-}
-
-const PORTAL_QUOTES = [
-    { text: "He who does not know how to look back at where he came from will never get to his destination.", author: "Jose Rizal" },
-    { text: "The youth is the fair hope of my motherland.", author: "Jose Rizal" },
-    { text: "Without liberty, there is no light.", author: "Jose Rizal" },
-    { text: "I wish to show those who deny us Patriotism that we know how to die for our duty.", author: "Jose Rizal" },
-    { text: "Genius has no country. It blossoms everywhere.", author: "Jose Rizal" }
-];
-
-function updatePortalQuote() {
-    const quote = PORTAL_QUOTES[Math.floor(Math.random() * PORTAL_QUOTES.length)];
-    const quoteEl = document.getElementById('portal-quote');
-    const authorEl = document.getElementById('portal-author');
-    quoteEl.style.opacity = 0;
-    setTimeout(() => { quoteEl.innerText = `"${quote.text}"`; authorEl.innerText = `— ${quote.author}`; quoteEl.style.opacity = 1; }, 1000);
-}
-
-let map;
-function initMap() {
-    map = L.map('map', { zoomControl: false, attributionControl: false }).setView([14.2, 121.1], 10);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-}
-function updateMap(lat, lng, zoom = 12) {
-    if (!map) return;
-    map.flyTo([lat, lng], zoom, { duration: 3 });
-    L.circleMarker([lat, lng], { radius: 5, color: '#d4af37', fillColor: '#d4af37', fillOpacity: 0.8 }).addTo(map);
+    ticker.innerText = HISTORICAL_FACTS.concat(HISTORICAL_FACTS).join(" • ");
 }
 
 const CHAPTERS = [
     { id: "1", title: "Birth in Calamba", date: "June 19, 1861", age: "0", lat: 14.212, lng: 121.168, bg: "#2c1e14", audio: "nature", status: "Newborn" },
     { id: "2", title: "Childhood by the Lake", date: "1864", age: "3", lat: 14.215, lng: 121.170, bg: "#2c1e14", audio: "nature", status: "Young Pepe" },
     { id: "3", title: "The Moth Story", date: "1866", age: "5", lat: 14.212, lng: 121.168, bg: "#3e2723", audio: "nature", status: "Student" },
-    { id: "4", title: "Early Talents", date: "1867", age: "6", lat: 14.212, lng: 121.168, bg: "#2c1e14", audio: "nature", status: "Artist" },
-    { id: "5", title: "GOMBURZA Tragedy", date: "1872", age: "11", lat: 14.582, lng: 120.978, bg: "#110c08", audio: "tension", status: "Witness" },
+    { id: "4", title: "The Shoreline Wanderer", date: "1868", age: "7", lat: 14.212, lng: 121.168, bg: "#2c1e14", audio: "nature", status: "Dreamer" },
+    { id: "5", title: "The First Poem", date: "1869", age: "8", lat: 14.212, lng: 121.168, bg: "#2c1e14", audio: "nature", status: "Poet" },
     { id: "6", title: "Schooling in Binan", date: "1870", age: "9", lat: 14.333, lng: 121.083, bg: "#2c1e14", audio: "nature", status: "Pupil" },
-    { id: "7", title: "First School Fight", date: "1871", age: "10", lat: 14.333, lng: 121.083, bg: "#3e2723", audio: "nature", status: "Survivor" },
+    { id: "7", title: "The Maestro's Lash", date: "1871", age: "10", lat: 14.333, lng: 121.083, bg: "#3e2723", audio: "nature", status: "Survivor" },
     { id: "8", title: "Entering Ateneo", date: "1872", age: "11", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Ateneano" },
-    { id: "9", title: "The Jesuit Empire", date: "1873", age: "12", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Interno" },
-    { id: "10", title: "The Roman Empire", date: "1874", age: "13", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Emperor" },
-    { id: "11", title: "Artistic Maturity", date: "1875", age: "14", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Sculptor" },
-    { id: "12", title: "Sobresaliente", date: "1877", age: "16", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Graduate" },
+    { id: "9", title: "Jesuit Discipline", date: "1873", age: "12", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Interno" },
+    { id: "10", title: "Roman Empire Rank", date: "1874", age: "13", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Emperor" },
+    { id: "12", title: "Graduation Honor", date: "1877", age: "16", lat: 14.590, lng: 120.975, bg: "#1a1c2c", audio: "city", status: "Graduate" },
     { id: "13", title: "UST Philosophy", date: "1877", age: "16", lat: 14.609, lng: 120.989, bg: "#2d3436", audio: "city", status: "Freshman" },
-    { id: "14", title: "UST Medicine", date: "1878", age: "17", lat: 14.609, lng: 120.989, bg: "#2d3436", audio: "city", status: "Medic" },
-    { id: "15", title: "Segunda Katigbak", date: "1877", age: "16", lat: 13.941, lng: 121.164, bg: "#3e2723", audio: "nature", status: "Lover" },
+    { id: "14", title: "Medical Studies", date: "1878", age: "17", lat: 14.609, lng: 120.989, bg: "#2d3436", audio: "city", status: "Medic" },
+    { id: "15", title: "First Love: Segunda", date: "1877", age: "16", lat: 13.941, lng: 121.164, bg: "#3e2723", audio: "nature", status: "Suitor" },
     { id: "16", title: "Leonor Rivera", date: "1879", age: "18", lat: 15.485, lng: 120.592, bg: "#3e2723", audio: "nature", status: "Betrothed" },
-    { id: "17", title: "A La Juventud Filipina", date: "1879", age: "18", lat: 14.609, lng: 120.989, bg: "#1a1c2c", audio: "city", status: "Poet" },
-    { id: "18", title: "El Consejo de los Dioses", date: "1880", age: "19", lat: 14.609, lng: 120.989, bg: "#1a1c2c", audio: "city", status: "Winner" },
     { id: "19", title: "Secret Departure", date: "May 1, 1882", age: "21", lat: 14.594, lng: 120.970, bg: "#0f0b08", audio: "tension", status: "Voyager" },
-    { id: "20", title: "Singapore Arrival", date: "May 9, 1882", age: "21", lat: 1.352, lng: 103.819, bg: "#0f0b08", audio: "nature", status: "Foreigner" },
-    { id: "21", title: "Through Suez Canal", date: "June 1882", age: "21", lat: 29.966, lng: 32.549, bg: "#1a1c2c", audio: "nature", status: "Voyager" },
-    { id: "22", title: "Barcelona Shore", date: "June 16, 1882", age: "21", lat: 41.385, lng: 2.173, bg: "#1e272e", audio: "city", status: "Expatriate" },
-    { id: "23", title: "Amor Patrio", date: "Aug 1882", age: "21", lat: 41.385, lng: 2.173, bg: "#1e272e", audio: "city", status: "Patriot" },
     { id: "24", title: "Madrid University", date: "Nov 1882", age: "21", lat: 40.416, lng: -3.703, bg: "#1e272e", audio: "city", status: "Scholar" },
-    { id: "25", title: "Freemasonry", date: "1883", age: "22", lat: 40.416, lng: -3.703, bg: "#1e272e", audio: "city", status: "Mason" },
-    { id: "26", title: "Cafe de Madrid", date: "June 25, 1884", age: "23", lat: 40.416, lng: -3.703, bg: "#1e272e", audio: "city", status: "Orator" },
-    { id: "27", title: "Medical Degree", date: "June 1884", age: "23", lat: 40.416, lng: -3.703, bg: "#1e272e", audio: "city", status: "Doctor" },
-    { id: "28", title: "Eye Training Paris", date: "1885", age: "24", lat: 48.856, lng: 2.352, bg: "#2c3e50", audio: "city", status: "Oculist" },
     { id: "29", title: "Heidelberg Spring", date: "1886", age: "25", lat: 49.412, lng: 8.710, bg: "#2c3e50", audio: "nature", status: "German Student" },
-    { id: "30", title: "A Las Flores de Heidelberg", date: "April 22, 1886", age: "25", lat: 49.412, lng: 8.710, bg: "#2c3e50", audio: "nature", status: "Poet" },
-    { id: "31", title: "Ferdinand Blumentritt", date: "July 1886", age: "25", lat: 50.551, lng: 14.133, bg: "#2c3e50", audio: "nature", status: "Friend" },
-    { id: "32", title: "Leipzig Research", date: "Aug 1886", age: "25", lat: 51.339, lng: 12.373, bg: "#2c3e50", audio: "city", status: "Scientist" },
-    { id: "33", title: "Berlin Poverty", date: "Winter 1886", age: "25", lat: 52.520, lng: 13.404, bg: "#0f0b08", audio: "somber", status: "Starving" },
     { id: "34", title: "Noli Me Tangere", date: "Feb 1887", age: "26", lat: 52.520, lng: 13.404, bg: "#1e272e", audio: "somber", status: "Author" },
-    { id: "35", title: "Maximo Viola", date: "March 1887", age: "26", lat: 52.520, lng: 13.404, bg: "#1e272e", audio: "city", status: "Grateful" },
-    { id: "36", title: "European Tour", date: "May 1887", age: "26", lat: 48.208, lng: 16.373, bg: "#1e272e", audio: "nature", status: "Tourist" },
-    { id: "37", title: "Return to Manila", date: "Aug 1887", age: "26", lat: 14.594, lng: 120.970, bg: "#2c1e14", audio: "tension", status: "Troubled" },
-    { id: "38", title: "Meeting Terrero", date: "1887", age: "26", lat: 14.594, lng: 120.970, bg: "#2c1e14", audio: "tension", status: "Rebel" },
-    { id: "39", title: "Calamba Troubles", date: "1888", age: "27", lat: 14.212, lng: 121.168, bg: "#2c1e14", audio: "tension", status: "Agitator" },
-    { id: "40", title: "Departure for HK", date: "Feb 1888", age: "27", lat: 22.279, lng: 114.162, bg: "#1a1c2c", audio: "city", status: "Exile" },
-    { id: "41", title: "Japan Arrival", date: "Feb 28, 1888", age: "27", lat: 35.689, lng: 139.691, bg: "#2f3640", audio: "nature", status: "O-Sei-San's" },
-    { id: "42", title: "Crossing America", date: "April 1888", age: "27", lat: 37.774, lng: -122.419, bg: "#2c3e50", audio: "city", status: "Traveler" },
-    { id: "43", title: "New York to London", date: "May 1888", age: "27", lat: 40.712, lng: -74.006, bg: "#2c3e50", audio: "city", status: "Voyager" },
-    { id: "44", title: "British Museum", date: "1888", age: "27", lat: 51.519, lng: -0.127, bg: "#1a1c2c", audio: "city", status: "Annotator" },
-    { id: "45", title: "La Solidaridad", date: "1889", age: "28", lat: 41.385, lng: 2.173, bg: "#1e272e", audio: "city", status: "Propagandist" },
-    { id: "46", title: "Paris Exposition", date: "1889", age: "28", lat: 48.858, lng: 2.294, bg: "#2c3e50", audio: "city", status: "Indio Bravo" },
-    { id: "47", title: "Brussels Frugality", date: "1890", age: "29", lat: 50.850, lng: 4.351, bg: "#2c3e50", audio: "city", status: "Exile" },
-    { id: "48", title: "Leonor Rivera's Loss", date: "1890", age: "29", lat: 50.850, lng: 4.351, bg: "#0f0b08", audio: "somber", status: "Heartbroken" },
-    { id: "49", title: "El Filibusterismo", date: "1891", age: "30", lat: 51.054, lng: 3.717, bg: "#1e272e", audio: "somber", status: "Radical" },
-    { id: "50", title: "Hong Kong Practice", date: "Nov 1891", age: "30", lat: 22.279, lng: 114.162, bg: "#1a1c2c", audio: "city", status: "Doctor" },
-    { id: "51", title: "Borneo Project", date: "1892", age: "31", lat: 4.535, lng: 114.727, bg: "#2f3640", audio: "nature", status: "Colonizer" },
-    { id: "52", title: "Return to Manila", date: "June 26, 1892", age: "31", lat: 14.594, lng: 120.970, bg: "#2c1e14", audio: "tension", status: "Prisoner" },
-    { id: "53", title: "La Liga Filipina", date: "July 3, 1892", age: "31", lat: 14.594, lng: 120.970, bg: "#2c1e14", audio: "tension", status: "Founder" },
-    { id: "54", title: "Dapitan Exile", date: "July 17, 1892", age: "31", lat: 8.654, lng: 123.424, bg: "#0a2f1f", audio: "somber", status: "Exiled" },
-    { id: "55", title: "The Lottery Win", date: "Sept 1892", age: "31", lat: 8.654, lng: 123.424, bg: "#0a2f1f", audio: "nature", status: "Lucky" },
-    { id: "56", title: "Science in Exile", date: "1893", age: "32", lat: 8.654, lng: 123.424, bg: "#0a2f1f", audio: "nature", status: "Scientist" },
-    { id: "57", title: "Dapitan Water System", date: "1894", age: "33", lat: 8.654, lng: 123.424, bg: "#0a2f1f", audio: "nature", status: "Engineer" },
-    { id: "58", title: "Josephine Bracken", date: "1895", age: "34", lat: 8.654, lng: 123.424, bg: "#0a2f1f", audio: "nature", status: "Husband" },
-    { id: "59", title: "Volunteer Doctor", date: "1896", age: "35", lat: 14.594, lng: 120.970, bg: "#2c1e14", audio: "tension", status: "Medic" },
-    { id: "60", title: "Fort Santiago", date: "Nov 1896", age: "35", lat: 14.594, lng: 120.970, bg: "#110c08", audio: "tension", status: "Accused" },
+    { id: "41", title: "O-Sei-San's Japan", date: "Feb 1888", age: "27", lat: 35.689, lng: 139.691, bg: "#2f3640", audio: "nature", status: "Foreigner" },
+    { id: "54", title: "Dapitan Exile", date: "July 1892", age: "31", lat: 8.654, lng: 123.424, bg: "#0a2f1f", audio: "somber", status: "Exiled" },
     { id: "61", title: "Bagumbayan", date: "Dec 30, 1896", age: "35", lat: 14.582, lng: 120.978, bg: "#2d0a0a", audio: "somber", status: "Martyr" }
 ];
 
 const storyData = {
-    "1": [{ name: "Narrator", text: "On a moonlit Wednesday, June 19, 1861, Jose Protasio Rizal Mercado y Alonso Realonda is born. His head is unusually large, a sign of the heavy thoughts he would one day carry.", isFact: true }, { name: "Doña Teodora", text: "My son, you are born under a bright moon. May your mind always see the light in the darkest nights.", choices: [{ text: "Gaze toward the light.", stat: "wisdom", val: 5, rel: { name: "Teodora Alonso", role: "Mother", age: 34 } }] }],
-    "3": [{ name: "Doña Teodora", text: "Look at the moth, Pepe. It seeked the light and found only the flame. Do not let your curiosity lead you to ruin.", choices: [{ text: "The light is worth the risk of the flame.", stat: "nationalism", val: 10 }, { text: "I will learn to see without burning.", stat: "wisdom", val: 10 }] }],
-    "8": [{ name: "Narrator", text: "1872. Jose enters Ateneo Municipal. To keep him safe from the 'Mercado' association with the GOMBURZA martyrs, his brother Paciano gives him a new name: Rizal.", isFact: true }],
-    "15": [{ name: "Narrator", text: "Aged 16, Jose meets Segunda Katigbak, his first love. She is betrothed to another man, a pain that echoes in his first poems.", choices: [{ text: "Accept the fleeting nature of first love.", stat: "wisdom", val: 10, rel: { name: "Segunda Katigbak", role: "First Love", age: 14 } }] }],
-    "34": [{ name: "Narrator", text: "In Berlin, the manuscript is finished. 'Noli Me Tangere'—Touch Me Not. A mirror held up to the archipelago's suffering.", isFact: true }],
-    "61": [{ name: "Narrator", text: "7:03 AM. Dec 30, 1896. Rizal stands before the firing squad. He asks to face his executioners. They refuse. He twists his body to fall facing the sun.", isFact: true }]
+    "1": [{ name: "Narrator", text: "June 19, 1861. A moonlit Wednesday in Calamba. You are born to Francisco and Teodora. Your large head marks you as a child of deep thought.", choices: [{ text: "Gaze at the moon.", stat: "wisdom", val: 10, rel: { name: "Teodora Alonso", role: "Mother", age: 34 } }, { text: "Cry for your father.", stat: "nationalism", val: 5, rel: { name: "Francisco Mercado", role: "Father", age: 43 } }] }],
+    "3": [{ name: "Doña Teodora", text: "Look at the moth, Pepe. It seeked the light and found only the flame. Do you understand the risk of curiosity?", choices: [{ text: "Light is worth any risk.", stat: "nationalism", val: 15 }, { text: "I will learn from its charred wings.", stat: "wisdom", val: 15 }] }],
+    "6": [{ name: "Maestro Justiniano", text: "You are small, Rizal, but your brain is sharp. The other boys mock your height. How do you respond?", choices: [{ text: "Outsmart them in the classroom.", stat: "wisdom", val: 15 }, { text: "Wrestle them to show your strength.", stat: "nationalism", val: 10 }] }],
+    "8": [{ name: "Paciano", text: "To keep you safe from the friars, you must use the name 'Rizal'. It means a green field of harvest.", choices: [{ text: "Embrace the new identity.", stat: "nationalism", val: 10, rel: { name: "Paciano Rizal", role: "Brother", age: 21 } }, { text: "Honor the name Mercado.", stat: "wisdom", val: 5 }] }],
+    "15": [{ name: "Segunda Katigbak", text: "I must marry another, Jose. It is the custom of our families. Will you fight for me?", choices: [{ text: "Accept the duty to my studies.", stat: "wisdom", val: 15, rel: { name: "Segunda Katigbak", role: "First Love", age: 14 } }, { text: "Declare my undying love.", stat: "nationalism", val: 10 }] }],
+    "34": [{ name: "Maximo Viola", text: "Jose, you look like a ghost. You haven't eaten for days to print this book. Take the money.", choices: [{ text: "Print the Noli immediately.", stat: "nationalism", val: 30, rel: { name: "Maximo Viola", role: "Savior of Noli", age: 30 } }, { text: "Save the money for food.", stat: "wisdom", val: 10 }] }],
+    "54": [{ name: "The Guard", text: "You are exiled to Dapitan. You could spend your days in peace. What is your first priority?", choices: [{ text: "Build a school for the local boys.", stat: "wisdom", val: 25 }, { text: "Build a clinic to heal the poor.", stat: "nationalism", val: 20 }] }],
+    "61": [{ name: "The Captain", text: "Face the sea, traitor. We shoot traitors in the back.", choices: [{ text: "Refuse and face the sun.", stat: "nationalism", val: 50 }, { text: "Die with a silent prayer.", stat: "wisdom", val: 50 }] }]
 };
 
+// Filling logic with more choices
 for (let i = 1; i <= 61; i++) {
     const id = i.toString();
     if (!storyData[id]) {
-        const chap = CHAPTERS[i-1];
-        const ageVal = chap.age ? chap.age.toString() : "0";
-        storyData[id] = [{ name: "Narrator", text: `History moves forward: ${chap.title}. Rizal is now at the age of ${chap.status === 'Newborn' ? 0 : ageVal}. Every step brings him closer to the field of Bagumbayan.`, isFact: (Math.random() > 0.7) }];
+        const chap = CHAPTERS.find(c => c.id === id) || { title: "Historical Passage", age: "N/A" };
+        storyData[id] = [{ 
+            name: "Narrator", 
+            text: `Rizal is immersed in: ${chap.title}. A moment for reflection on his destiny arises.`, 
+            choices: [
+                { text: "Seek intellectual growth in this era.", stat: "wisdom", val: 10 },
+                { text: "Prioritize the plight of the Filipino people.", stat: "nationalism", val: 10 }
+            ] 
+        }];
     }
 }
 
@@ -562,20 +465,24 @@ async function startGame() {
     initChapter(0);
 }
 
+function updateMap(lat, lng, zoom = 12) {
+    if (!map) return;
+    map.flyTo([lat, lng], zoom, { duration: 3 });
+    L.circleMarker([lat, lng], { radius: 5, color: '#d4af37', fillColor: '#d4af37', fillOpacity: 0.8 }).addTo(map);
+}
+
 function initChapter(idx) {
     if (typewriterTimeout) clearTimeout(typewriterTimeout);
     audio.playTransition();
     currentChapterIdx = idx; dialogueIdx = 0;
-    const chap = CHAPTERS[idx];
+    const chap = CHAPTERS[idx] || CHAPTERS[0];
     document.body.style.backgroundColor = chap.bg || "#0f0b08";
     document.getElementById('chapter-title').innerText = chap.title;
     document.getElementById('current-date').innerText = chap.date;
     document.getElementById('rizal-status').innerText = chap.status;
     document.getElementById('chap-counter').innerText = `${idx + 1} / 61`;
-    
     const portal = document.getElementById('visual-portal');
     portal.style.background = `linear-gradient(180deg, ${chap.bg || '#2c1e14'} 0%, #000 100%)`;
-
     updateMap(chap.lat, chap.lng, (idx > 18 && idx < 51) ? 4 : 12);
     audio.playSceneAmbient(chap.audio);
     updatePortalQuote();
@@ -588,16 +495,16 @@ function addRelation(rel) {
     const list = document.getElementById('relations-list');
     const card = document.createElement('div');
     card.className = 'relative-card dialogue-appear';
-    card.innerHTML = `<div class="text-accent-gold font-bold text-[10px]">${rel.name}</div>
-        <div class="flex justify-between text-[8px] opacity-60"><span>${rel.role}</span><span>Age: ${rel.age}</span></div>`;
+    card.innerHTML = `<div class="text-accent-gold font-bold text-[11px]">${rel.name}</div>
+        <div class="flex justify-between text-[9px] opacity-60"><span>${rel.role}</span><span>Age: ${rel.age}</span></div>`;
     list.prepend(card);
 }
 
 function showDialogue() {
     if (typewriterTimeout) clearTimeout(typewriterTimeout);
-    const chapKey = CHAPTERS[currentChapterIdx].id;
+    const chapKey = (currentChapterIdx + 1).toString();
     const dialogs = storyData[chapKey];
-    if (dialogueIdx >= dialogs.length) {
+    if (!dialogs || dialogueIdx >= dialogs.length) {
         if (currentChapterIdx < CHAPTERS.length - 1) initChapter(currentChapterIdx + 1);
         else showFinalEnding();
         return;
@@ -618,7 +525,7 @@ function showDialogue() {
         if (i < d.text.length) {
             textEl.innerText += d.text.charAt(i);
             if (i % 2 === 0) audio.playTypewriter();
-            i++; typewriterTimeout = setTimeout(type, 20);
+            i++; typewriterTimeout = setTimeout(type, 15);
         } else {
             textEl.classList.remove('cursor');
             if (d.choices) {
@@ -658,6 +565,22 @@ function showFinalEnding() {
     msg.innerText = nationalism > wisdom + 10 ? 
         "You died a revolutionary martyr. Your blood became the ink for the declaration of a new Republic." : 
         "You built the intellectual foundation of a nation. Your ideas outlasted the bullets of Bagumbayan.";
+}
+
+const PORTAL_QUOTES = [
+    { text: "He who does not know how to look back at where he came from will never get to his destination.", author: "Jose Rizal" },
+    { text: "The youth is the fair hope of my motherland.", author: "Jose Rizal" },
+    { text: "Without liberty, there is no light.", author: "Jose Rizal" },
+    { text: "I wish to show those who deny us Patriotism that we know how to die for our duty.", author: "Jose Rizal" },
+    { text: "Genius has no country. It blossoms everywhere.", author: "Jose Rizal" }
+];
+
+function updatePortalQuote() {
+    const quote = PORTAL_QUOTES[Math.floor(Math.random() * PORTAL_QUOTES.length)];
+    const quoteEl = document.getElementById('portal-quote');
+    const authorEl = document.getElementById('portal-author');
+    quoteEl.style.opacity = 0;
+    setTimeout(() => { quoteEl.innerText = `"${quote.text}"`; authorEl.innerText = `— ${quote.author}`; quoteEl.style.opacity = 1; }, 1000);
 }
 </script>
 </body>
